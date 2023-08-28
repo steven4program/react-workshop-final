@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './assets/scss/index.scss';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Todos from './pages/todos';
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,11 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <Register />,
-  }
+  },
+  {
+    path: '/todos',
+    element: <Todos />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

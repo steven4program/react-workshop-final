@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Check from '../assets/images/check.png';
 import Work from '../assets/images/img.png';
+import PropTypes from 'prop-types';
 
 const base_url = "https://todolist-api.hexschool.io/"
 
-function Login() {
+function Login({ setToken }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -25,10 +26,10 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axios.post(base_url  + 'users/sign_in', formData);
-      const { token, exp } = res.data;
-      document.cookie = `hexToken=${token}; expires=${new Date(exp * 1000)}`;
+      const { token } = res.data;
+      setToken(token);
       if (res.data.status) {
-        navigate('/');
+        navigate('/todos');
       }
     } catch (err) {
       console.log(err);
@@ -39,7 +40,7 @@ function Login() {
     <div id="loginPage" className="bg-yellow">
       <div className="conatiner loginPage vhContainer">
         <div className="side">
-          <a href="#" className='web-title'><img className="logoImg" src={Check} alt="checkIcon" />ONLINE TODO LIST</a>
+          <a href="/login" className='web-title'><img className="logoImg" src={Check} alt="checkIcon" />ONLINE TODO LIST</a>
           <img className="d-m-n" src={Work} alt="workImg" />
         </div>
         <div>
@@ -50,12 +51,16 @@ function Login() {
             <label className="formControls_label" htmlFor="password">密碼</label>
             <input className="formControls_input" type="password" name="password" id="password" placeholder="請輸入密碼" onChange={handleInputChange} required />
             <input className="formControls_btnSubmit" type="button" onClick={handleSubmit} value="登入" />
-            <a className="formControls_btnLink" href="./register">註冊帳號</a>
+            <a className="formControls_btnLink" href="/register">註冊帳號</a>
           </form>
         </div>
       </div>
     </div>
   )
+}
+
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
 }
 
 export default Login;
