@@ -44,13 +44,13 @@ function Login() {
         </div>
         <div>
           <form className="formControls" action="index.html">
-              <h2 className="formControls_txt">最實用的線上代辦事項服務</h2>
-              <label className="formControls_label" htmlFor="email">Email</label>
-              <input className="formControls_input" type="text" id="email" name="email" placeholder="請輸入 Email" onChange={handleInputChange} required />
-              <label className="formControls_label" htmlFor="password">密碼</label>
-              <input className="formControls_input" type="password" name="password" id="password" placeholder="請輸入密碼" onChange={handleInputChange} required />
-              <input className="formControls_btnSubmit" type="button" onClick={handleSubmit} value="登入" />
-              <a className="formControls_btnLink" href="#signUpPage">註冊帳號</a>
+            <h2 className="formControls_txt">最實用的線上代辦事項服務</h2>
+            <label className="formControls_label" htmlFor="email">Email</label>
+            <input className="formControls_input" type="text" id="email" name="email" placeholder="請輸入 Email" onChange={handleInputChange} required />
+            <label className="formControls_label" htmlFor="password">密碼</label>
+            <input className="formControls_input" type="password" name="password" id="password" placeholder="請輸入密碼" onChange={handleInputChange} required />
+            <input className="formControls_btnSubmit" type="button" onClick={handleSubmit} value="登入" />
+            <a className="formControls_btnLink" href="./register">註冊帳號</a>
           </form>
         </div>
       </div>
