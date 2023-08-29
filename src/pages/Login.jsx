@@ -3,11 +3,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Check from '../assets/images/check.png';
 import Work from '../assets/images/img.png';
-import PropTypes from 'prop-types';
 
 const base_url = "https://todolist-api.hexschool.io/"
 
-function Login({ setToken }) {
+function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -27,9 +26,9 @@ function Login({ setToken }) {
     try {
       const res = await axios.post(base_url  + 'users/sign_in', formData);
       const { token } = res.data;
-      setToken(token);
+      localStorage.setItem('token', token);
       if (res.data.status) {
-        navigate('/todos');
+        navigate('/');
       }
     } catch (err) {
       console.log(err);
@@ -57,10 +56,6 @@ function Login({ setToken }) {
       </div>
     </div>
   )
-}
-
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
 }
 
 export default Login;

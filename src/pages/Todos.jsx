@@ -2,23 +2,19 @@ import Check from '../assets/images/check.png';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useToken from '../Middleware/useToken';
 
 function Todos() {
-  const { token, setToken } = useToken();
   const navigate = useNavigate();
   const [todoList, setTodoList] = useState([]);
-  if (!token) {
-    navigate('/login');
-  }
   
   const base_url = "https://todolist-api.hexschool.io/"
 
   const getTodoList = async () => {
+    const localToken = localStorage.getItem('token');
     try {
       const res = await axios.get(base_url + 'todos', {
         headers: {
-          'Authorization': token}
+          'Authorization': localToken}
         });
       setTodoList(res.data.data);
     } catch (err) {
@@ -27,10 +23,14 @@ function Todos() {
   }
 
   const signOut = async () => {
+    const localToken = localStorage.getItem('token');
     try {
-      const res = await axios.post(base_url + 'users/sign_out');
-      setToken('');
+      const res = await axios.post(base_url + 'users/sign_out', {}, {
+        headers: {
+          'Authorization': localToken}
+        });
       if (res.status) {
+        localStorage.removeItem('token');
         navigate('/login');
       }
     } catch (err) {
@@ -38,17 +38,21 @@ function Todos() {
     }
   }
 
-  useEffect(() => {
-    getTodoList();
-  }, [])
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    navigate('/login');
+  }
+  getTodoList();
+}, [])
 
   return (
     <div id="todoListPage" className="bg-half">
       <nav>
-        <a href="/todos" className='web-title'><img className="logoImg" src={Check} alt="checkIcon" />ONLINE TODO LIST</a>
+        <a href="/" className='web-title'><img className="logoImg" src={Check} alt="checkIcon" />ONLINE TODO LIST</a>
         <ul>
           <li className="todo_sm"><a href="/"><span>王小明的代辦</span></a></li>
-          <li><a href="" onClick={signOut}>登出</a></li>
+          <li><button onClick={signOut}>登出</button></li>
         </ul>
       </nav>
       <div className="conatiner todoListPage vhContainer">
